@@ -1,3 +1,4 @@
+# Inicio.py
 import streamlit as st
 from pathlib import Path
 import base64
@@ -5,15 +6,15 @@ import base64
 # ---------------- CONFIG ----------------
 st.set_page_config(page_title="🍞 Fame", layout="wide")
 
-# Estado global
+# ---------------- ESTADO GLOBAL ----------------
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Inicio"
 if "theme" not in st.session_state:
-    st.session_state.theme = "light"
+    st.session_state.theme = "light"          # claro por defecto
 if "lang" not in st.session_state:
-    st.session_state.lang = "es"
+    st.session_state.lang = "es"              # español por defecto
 
-# Query params
+# ---------------- QUERY PARAMS ----------------
 qp = st.query_params
 if qp.get("page"):
     st.session_state.current_page = qp["page"]
@@ -22,32 +23,34 @@ if qp.get("theme"):
 if qp.get("lang"):
     st.session_state.lang = qp["lang"]
 
-lang = st.session_state.lang
+lang  = st.session_state.lang
 theme = st.session_state.theme
 other_theme = "dark" if theme == "light" else "light"
-other_lang = "gl" if lang == "es" else "es"
+other_lang  = "gl" if lang == "es" else "es"
 
-# Textos (ES/GL)
+# ---------------- TEXTOS ----------------
 TEXTS = {
     "es": {
-        "inicio": "Inicio", "menu": "Menú", "order": "🍕 Pide aquí!",
-        "follow": "📸 Síguenos!", "maps": "📍 Encuéntranos aquí",
-        "light": "☀️ Claro", "dark": "🌙 Oscuro", "lang_name": "🌐 Galego",
-        "welcome": "🍞 Fame",
-        "desc": "Artesanas • Frescas • Ingredientes de primera calidad<br>Descubre nuestras focaccias saladas y dulces, preparadas al momento con ingredientes locales.",
-        "time": "Tiempo medio de pedido", "rating": "Valoración media",
-        "made": "Hecho en", "location": "Santiago de Compostela",
-        "footer": "© 2025 Fame — Sitio hecho con Streamlit",
+        "inicio":"Inicio","menu":"Menú",
+        "order":"🍕 Pide aquí!","follow":"📸 Síguenos!","maps":"📍 Encuéntranos aquí",
+        "light":"☀️ Claro","dark":"🌙 Oscuro","lang_name":"🌐 Galego",
+        "welcome":"🍞 Fame",
+        "desc":"Artesanas • Frescas • Ingredientes de primera calidad<br>Descubre nuestras focaccias saladas y dulces, preparadas al momento con ingredientes locales.",
+        "time":"Tiempo medio de pedido","rating":"Valoración media","made":"Hecho en",
+        "location":"Santiago de Compostela",
+        "footer":"© 2025 Fame — Sitio hecho con Streamlit",
+        "admin_on":"🔑 Modo admin activo",
     },
     "gl": {
-        "inicio": "Inicio", "menu": "Carta", "order": "🍕 Pide aquí!",
-        "follow": "📸 Séguenos!", "maps": "📍 Atópanos aquí",
-        "light": "☀️ Claro", "dark": "🌙 Escuro", "lang_name": "🌐 Castellano",
-        "welcome": "🍞 Fame",
-        "desc": "Artesás • Frescas • Ingredientes de primeira calidade<br>Descubre as nosas focaccias salgadas e doces, preparadas ao momento con ingredientes locais.",
-        "time": "Tempo medio do pedido", "rating": "Valoración media",
-        "made": "Feito en", "location": "Santiago de Compostela",
-        "footer": "© 2025 Fame — Sitio feito con Streamlit",
+        "inicio":"Inicio","menu":"Carta",
+        "order":"🍕 Pide aquí!","follow":"📸 Séguenos!","maps":"📍 Atópanos aquí",
+        "light":"☀️ Claro","dark":"🌙 Escuro","lang_name":"🌐 Castellano",
+        "welcome":"🍞 Fame",
+        "desc":"Artesás • Frescas • Ingredientes de primeira calidade<br>Descubre as nosas focaccias salgadas e doces, preparadas ao momento con ingredientes locais.",
+        "time":"Tempo medio do pedido","rating":"Valoración media","made":"Feito en",
+        "location":"Santiago de Compostela",
+        "footer":"© 2025 Fame — Sitio feito con Streamlit",
+        "admin_on":"🔑 Modo admin activo",
     },
 }
 
@@ -60,8 +63,8 @@ div.block-container{padding-left:3rem;padding-right:3rem;max-width:1500px}
 </style>
 """, unsafe_allow_html=True)
 
-# Páginas
-PAGES = {"Inicio": "Inicio", "Menú": "1_Menu"}
+# Páginas del sitio (Analítica = 2, Admin = 3)
+PAGES = {"Inicio":"Inicio","Menú":"1_Menu","Analítica":"2_Analitica","Admin":"3_Admin"}
 
 # ---------- Tema / Colores ----------
 light_override = (
@@ -73,18 +76,40 @@ light_override = (
     "--menu-active:#a11f1f;"
     "--switch-bg:#bbb;"
     "--switch-ball:#c94c4c;"
-    "--metric-text:#1a1a1a;"
+    "--metric-text:#1a1a1a;"   #importante para que se vea en claro 
     "}"
-) if theme == "light" else ""
+) if theme=="light" else ""
+
+def label_for(page_name: str) -> str:
+    if page_name == "Inicio":
+        return TEXTS[lang]['inicio']
+    if page_name == "Menú":
+        return TEXTS[lang]['menu']
+    if page_name == "Analítica":
+        return "Analítica"
+    if page_name == "Admin":
+        return "Admin"
+    return page_name
 
 # ---------- Construcción del menú ----------
 menu_html = ""
-for page_name, page_file in PAGES.items():
-    active_class = "active" if st.session_state.current_page == page_name else ""
-    label = TEXTS[lang]['inicio'] if page_name == "Inicio" else TEXTS[lang]['menu']
-    menu_html += f'<a class="menu-link {active_class}" href="?page={page_name}&theme={theme}&lang={lang}" target="_self" onclick="closeMenu()">{label}</a>'
+is_admin = "admin" in qp and qp["admin"] == "true"
 
-# ---------- CSS y cabecera ----------
+for page_name, _ in PAGES.items():
+    # Ocultamos páginas internas (Analítica, Admin) si no está en modo admin
+    if page_name in ["Analítica", "Admin"] and not is_admin:
+        continue
+
+    active_class = "active" if st.session_state.current_page == page_name else ""
+    menu_html += (
+        f'<a class="menu-link {active_class}" '
+        f'href="?page={page_name}&theme={theme}&lang={lang}'
+        + ('&admin=true' if is_admin else '') +  # mantener modo admin al navegar
+        f'" target="_self" onclick="closeMenu()">'
+        f'{label_for(page_name)}</a>'
+    )
+
+# ---------- CSS + CABECERA (desktop + móvil) ----------
 st.markdown(f"""
 <style>
 :root{{
@@ -123,8 +148,11 @@ text-decoration:none!important;border:1px solid rgba(255,255,255,.15);transition
 .switch::before{{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;background:var(--switch-ball);border-radius:50%;transition:transform .25s}}
 .switch.on::before{{transform:translateX(22px)}}
 
+/* Asegurar color de métricas en ambos temas */
+div[data-testid="stMetricValue"], div[data-testid="stMetricLabel"]{{color:var(--metric-text)!important}}
+
 /* 📱 Móvil */
-.menu-toggle {{display:none;}} /* 🔥 Oculto en escritorio */
+.menu-toggle {{display:none;}} /* Oculto en escritorio */
 @media (max-width: 768px) {{
   .header-bar {{align-items:flex-start;padding:0.8rem 1.2rem;}}
   .menu-toggle {{display:block;cursor:pointer;font-size:1.4rem;font-weight:700;
@@ -138,7 +166,14 @@ text-decoration:none!important;border:1px solid rgba(255,255,255,.15);transition
   div.block-container {{padding-top:6.5rem!important;}}
 }}
 #menuChk {{display:none;}}
-div[data-testid="stMetricValue"],div[data-testid="stMetricLabel"]{{color:var(--metric-text)!important}}
+
+/* 🔢 Badge contador de visitas (abajo-dcha) */
+.counter-badge {{
+  position: fixed; right: 12px; bottom: 10px; z-index: 9998;
+  background: var(--menu-bg); color: var(--text-color);
+  padding: 6px 10px; border-radius: 12px; font-size: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25);
+}}
 </style>
 
 <script>
@@ -176,7 +211,11 @@ document.addEventListener('click', function(e) {{
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- NAVEGACIÓN ----------
+# ---------- BANNER: modo admin activo (si ?admin=true) ----------
+if "admin" in qp and qp["admin"] == "true":
+    st.info(TEXTS[lang]["admin_on"])
+
+# ---------- NAVEGACIÓN A OTRAS PÁGINAS ----------
 selected = PAGES[st.session_state.current_page]
 if selected != "Inicio":
     try:
@@ -210,4 +249,46 @@ with c2:
 with c3:
     st.metric(TEXTS[lang]['made'], TEXTS[lang]['location'])
 
-st.caption(TEXTS[lang]['footer'])
+# ---------- LOG DE VISITAS (CSV GLOBAL) ----------
+from utils import registrar_visita, total_visitas
+registrar_visita("Inicio", theme, lang)
+total = total_visitas()
+
+# Badge de contador (visible abajo a la derecha)
+st.markdown(
+    f"<div class='counter-badge'>👀 {total} visitas</div>",
+    unsafe_allow_html=True
+)
+
+# ---------- DESCARGA CSV (solo si ?admin=true y con contraseña persistente) ----------
+if "admin" in qp and qp["admin"] == "true":
+    st.divider()
+    st.markdown("### 📊 Registros de visitas")
+
+    PASSWORD = "fame2025"  # 🔒 Contraseña de admin
+    if "auth_ok" not in st.session_state:
+        st.session_state.auth_ok = False
+
+    # Si aún no está autenticado, pedimos la contraseña
+    if not st.session_state.auth_ok:
+        pwd = st.text_input("Introduce la contraseña de administrador:", type="password")
+        if st.button("Acceder"):
+            if pwd == PASSWORD:
+                st.session_state.auth_ok = True
+                st.success("✅ Acceso concedido. Modo admin activo.")
+                st.experimental_rerun()
+            else:
+                st.error("❌ Contraseña incorrecta.")
+        st.stop()
+
+    # Si ya está autenticado (modo admin activo)
+    csv_path = Path("data/visitas.csv")
+    if csv_path.exists():
+        st.download_button(
+            "⬇️ Descargar registros (CSV)",
+            csv_path.read_bytes(),
+            file_name="visitas_fame.csv",
+            mime="text/csv"
+        )
+    else:
+        st.info("Aún no hay registros.")
