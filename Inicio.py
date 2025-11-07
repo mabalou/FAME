@@ -30,7 +30,7 @@ other_lang  = "gl" if lang == "es" else "es"
 # Textos (ES/GL)
 TEXTS = {
     "es": {
-        "inicio":"Inicio","menu":"Menú","order":"🍕 Pide aquí!","follow":"📸 Síguenos!",
+        "inicio":"Inicio","menu":"Menú","order":"🍕 Pide aquí!","follow":"📸 Síguenos!", "maps":"📍 Encuéntranos aquí",
         "light":"☀️ Claro","dark":"🌙 Oscuro","lang_name":"🌐 Galego",
         "welcome":"🍞 Fame",
         "desc":"Artesanas • Frescas • Ingredientes de primera calidad<br>Descubre nuestras focaccias saladas y dulces, preparadas al momento con ingredientes locales.",
@@ -39,7 +39,7 @@ TEXTS = {
         "footer":"© 2025 Fame — Sitio hecho con Streamlit",
     },
     "gl": {
-        "inicio":"Inicio","menu":"Carta","order":"🍕 Pide aquí!","follow":"📸 Séguenos!",
+        "inicio":"Inicio","menu":"Carta","order":"🍕 Pide aquí!","follow":"📸 Séguenos!", "maps":"📍 Atópanos aquí",
         "light":"☀️ Claro","dark":"🌙 Escuro","lang_name":"🌐 Castellano",
         "welcome":"🍞 Fame",
         "desc":"Artesás • Frescas • Ingredientes de primeira calidade<br>Descubre as nosas focaccias salgadas e doces, preparadas ao momento con ingredientes locais.",
@@ -141,7 +141,7 @@ div[data-testid="stMetricLabel"]{{color:var(--metric-text)!important}}
     <a class="menu-link {'active' if st.session_state.current_page=='Menú' else ''}" href="?page=Menú&theme={theme}&lang={lang}" target="_self">{TEXTS[lang]['menu']}</a>
     <a class="menu-btn" href="https://www.just-eat.es/restaurants-fame-santiago-de-compostela/" target="_blank">{TEXTS[lang]['order']}</a>
     <a class="menu-btn" href="https://www.instagram.com/moitafame/" target="_blank">{TEXTS[lang]['follow']}</a>
-    <a class="menu-btn" href="https://maps.app.goo.gl/d72Zn8c7V4UaLkNa7" target="_blank">📍 Encuéntranos aquí</a>
+    <a class="menu-btn" href="https://maps.app.goo.gl/d72Zn8c7V4UaLkNa7" target="_blank">{TEXTS[lang]['maps']}</a>
   </div>
   <div class="tools">
     <a href="?page={st.session_state.current_page}&theme={other_theme}&lang={lang}" target="_self" class="theme-toggle">
