@@ -1,0 +1,48 @@
+{
+  "Focaccias saladas": [
+    {
+      "nombre": "A Tartufata",
+      "precio": 13.65,
+      "descripcion": "Crema de ricotta e trufa, bresaola, stracciatella, canónigos y AOVE."
+    },
+    {
+      "nombre": "A Tricolore",
+      "precio": 11.70,
+      "descripcion": "Pesto de pistacho casero, stracciatella, tomate semiseco y AOVE."
+    },
+    {
+      "nombre": "A Galega",
+      "precio": 9.50,
+      "descripcion": "Chorizo de Lalín, queso Arzúa Ulloa, pimentón y AOVE."
+    },
+    {
+      "nombre": "A Rossa",
+      "precio": 13.65,
+      "descripcion": "Pesto rosso casero, bresaola, queso parmesano, tomate semiseco y AOVE."
+    }
+  ],
+  "Focaccias dulces": [
+    {
+      "nombre": "A Dolce Nociola",
+      "precio": 6.95,
+      "descripcion": "Nutella y granola de avellana."
+    },
+    {
+      "nombre": "A Dolce Pistachio",
+      "precio": 6.95,
+      "descripcion": "Crema de pistacho y granola de pistacho."
+    }
+  ],
+  "Postres": [
+    {
+      "nombre": "Lestedo",
+      "precio": 2.30,
+      "descripcion": "Almendras, azúcar, huevos, limón, vino dulce y brandy."
+    }
+  ],
+  "Bebidas": [
+    { "nombre": "Agua", "precio": 1.30, "descripcion": "" },
+    { "nombre": "Coca Cola Normal", "precio": 2.50, "descripcion": "" },
+    { "nombre": "Cerveza", "precio": 2.80, "descripcion": "18+" }
+  ]
+}
