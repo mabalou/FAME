@@ -141,6 +141,7 @@ div[data-testid="stMetricLabel"]{{color:var(--metric-text)!important}}
     <a class="menu-link {'active' if st.session_state.current_page=='Menú' else ''}" href="?page=Menú&theme={theme}&lang={lang}" target="_self">{TEXTS[lang]['menu']}</a>
     <a class="menu-btn" href="https://www.just-eat.es/restaurants-fame-santiago-de-compostela/" target="_blank">{TEXTS[lang]['order']}</a>
     <a class="menu-btn" href="https://www.instagram.com/moitafame/" target="_blank">{TEXTS[lang]['follow']}</a>
+    <a class="menu-btn" href="https://maps.app.goo.gl/d72Zn8c7V4UaLkNa7" target="_blank">📍 Encuéntranos aquí</a>
   </div>
   <div class="tools">
     <a href="?page={st.session_state.current_page}&theme={other_theme}&lang={lang}" target="_self" class="theme-toggle">
