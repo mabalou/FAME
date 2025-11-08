@@ -215,6 +215,31 @@ document.addEventListener('click', function(e) {{
 if "admin" in qp and qp["admin"] == "true":
     st.info(TEXTS[lang]["admin_on"])
 
+# Botón para salir de admin (quita ?admin=true y resetea auth)
+if "admin" in qp and qp["admin"] == "true":
+    col_exit, _ = st.columns([1, 5])
+    with col_exit:
+        if st.button("🚪 Salir de admin"):
+            # limpia autenticación en memoria
+            st.session_state.auth_ok = False
+            # quita el flag admin del querystring y mantiene página/tema/idioma
+            try:
+                # Streamlit >= 1.32
+                st.query_params.clear()
+                st.query_params.update({
+                    "page": st.session_state.current_page,
+                    "theme": theme,
+                    "lang": lang,
+                })
+            except Exception:
+                # Compatibilidad con versiones anteriores
+                st.experimental_set_query_params(
+                    page=st.session_state.current_page,
+                    theme=theme,
+                    lang=lang,
+                )
+            st.rerun()
+
 # ---------- NAVEGACIÓN A OTRAS PÁGINAS ----------
 selected = PAGES[st.session_state.current_page]
 if selected != "Inicio":
