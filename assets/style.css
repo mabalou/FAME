@@ -1,0 +1,132 @@
+/* === BOTONES ROJOS === */
+button[kind="primary"], button[kind="secondary"], div.stButton > button {
+  background-color: #b92e2e !important;
+  color: white !important;
+  border-radius: 8px !important;
+  border: none !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1rem !important;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button[kind="primary"]:hover, button[kind="secondary"]:hover, div.stButton > button:hover {
+  background-color: #c94c4c !important;
+  transform: translateY(-1px);
+}
+
+button[kind="primary"]:disabled, div.stButton > button:disabled {
+  background-color: #999 !important;
+  color: #ddd !important;
+  cursor: not-allowed !important;
+  transform: none;
+}
+
+/* Resto del CSS (selectbox, inputs, expanders) igual que antes */
+div[data-baseweb="select"] > div {
+  background-color: #b92e2e !important;
+  color: white !important;
+  border-radius: 8px !important;
+  border: none !important;
+  transition: background-color 0.2s ease;
+}
+div[data-baseweb="select"]:hover > div {
+  background-color: #c94c4c !important;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  background-color: #fff9f7 !important;
+  color: #1a1a1a !important;
+  border: 2px solid #c94c4c !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  transition: all 0.2s ease;
+  font-weight: 500 !important;
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  border-color: #b92e2e !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(185, 46, 46, 0.2);
+}
+
+/* Expanders */
+details[data-testid="stExpander"] {
+  border: none !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+summary {
+  background-color: #b92e2e !important;
+  color: white !important;
+  padding: 10px 14px !important;
+  font-weight: 600;
+  border-radius: 10px !important;
+  transition: background-color 0.2s ease;
+}
+summary:hover, details[open] > summary {
+  background-color: #c94c4c !important;
+}
+details[open] > div {
+  background-color: #fff9f7;
+  color: #1a1a1a;
+  padding: 10px 14px !important;
+  border-radius: 0 0 10px 10px !important;
+}
+
+/* === Animación de entrada para productos añadidos === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+div[data-testid="stVerticalBlock"] {
+  animation: fadeIn 0.4s ease;
+}
+/* === Estilo para botones pequeños de control (⬆️ ⬇️ 🗑️) === */
+div.stButton > button[kind="secondary"], div.stButton > button[kind="primary"] {
+  min-width: 40px !important;
+  padding: 4px 8px !important;
+}
+
+div.stButton > button:has(span:contains("⬆️")),
+div.stButton > button:has(span:contains("⬇️")),
+div.stButton > button:has(span:contains("🗑️")) {
+  background-color: #b92e2e !important;
+  color: white !important;
+  font-size: 1rem !important;
+  border-radius: 6px !important;
+  border: none !important;
+  transition: background-color 0.2s ease;
+}
+
+div.stButton > button:has(span:contains("⬆️")):hover,
+div.stButton > button:has(span:contains("⬇️")):hover {
+  background-color: #c94c4c !important;
+}
+
+div.stButton > button:has(span:contains("🗑️")):hover {
+  background-color: #a11f1f !important;
+}
+/* === Vista previa JSON clara === */
+div[data-testid="stCodeBlock"] pre {
+  background-color: #fff9f7 !important;/* Suaviza la aparición/desaparición del mensaje de éxito */
+div[data-testid="stNotification"] {
+  animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-4px); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-6px); }
+}
+
+  color: #1a1a1a !important;
+  border-radius: 8px !important;
+  border: 1px solid #c94c4c !important;
+  padding: 1rem !important;
+}

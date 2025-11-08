@@ -42,7 +42,7 @@ TEXTS = {
         "admin_on":"🔑 Modo admin activo",
     },
     "gl": {
-        "inicio":"Inicio","menu":"Menú",
+        "inicio":"Inicio","menu":"Carta",
         "order":"🍕 Pide aquí!","follow":"📸 Séguenos!","maps":"📍 Atópanos aquí",
         "light":"☀️ Claro","dark":"🌙 Escuro","lang_name":"🌐 Castellano",
         "welcome":"🍞 Fame",
