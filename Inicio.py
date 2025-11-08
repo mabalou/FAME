@@ -64,7 +64,7 @@ div.block-container{padding-left:3rem;padding-right:3rem;max-width:1500px}
 """, unsafe_allow_html=True)
 
 # Páginas del sitio (Analítica = 2, Admin = 3)
-PAGES = {"Inicio":"Inicio","Menú":"1_Menu","Analítica":"2_Analitica","Admin":"3_Admin"}
+PAGES = {"Inicio":"Inicio","Menú":"1_Menu","Analítica":"2_Analitica","Admin":"3_admin"}
 
 # ---------- Tema / Colores ----------
 light_override = (

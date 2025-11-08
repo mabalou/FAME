@@ -54,6 +54,26 @@ if st.session_state.get("saved", False):
 
 
 # --- Edición de secciones ---
+from streamlit_sortables import sort_items
+
+# --- Ordenar secciones completas ---
+st.markdown("### 🧱 Ordenar secciones del menú")
+
+sections = list(st.session_state.menu_temp.keys())
+
+ordered_sections = sort_items(
+    [f"🍽️ {s}" for s in sections],
+    direction="vertical",
+    key="sort_sections"
+)
+
+# Si cambia el orden, reordenamos el diccionario
+if [s.replace("🍽️ ", "") for s in ordered_sections] != sections:
+    new_order = {s.replace("🍽️ ", ""): st.session_state.menu_temp[s.replace('🍽️ ', '')] for s in ordered_sections}
+    st.session_state.menu_temp = new_order
+    st.success("✅ Secciones reordenadas correctamente")
+    st.rerun()
+
 for section, items in st.session_state.menu_temp.items():
     with st.expander(f"🍽️ {section}", expanded=False):
         # Crear lista visible con formato simple
